@@ -2,7 +2,7 @@ import {useState, forwardRef} from 'react';
 import styles from '../styles/New.module.css';
 import Sidebar from '../components/Admin/Sidebar';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
-import {addNewUser} from '../actions/userApi';
+import {addNewUser, isAuthenticated} from '../actions/userApi';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -83,13 +83,13 @@ const New = props => {
 		formData.append('role', role);
 
 		console.log(values)
-
-		addNewUser(formData).then(res => {
+		const userId = isAuthenticated().user._id;
+		addNewUser(formData, userId).then(res => {
 			console.log(res.data);
-			if(res.status === '200'){
-				setOpen(true);
-				setMessage(res.data.message);
-			}
+			
+			setOpen(true);
+			setMessage(res.data.message);
+			
 		}).catch(err => {
 			console.log(err.response.data.error)
 			setOpenError(true);

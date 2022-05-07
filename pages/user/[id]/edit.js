@@ -2,7 +2,7 @@ import {useState, useEffect, forwardRef} from 'react';
 import styles from '../../../styles/New.module.css';
 import Sidebar from '../../../components/Admin/Sidebar';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
-import {getStudent, updateUser, getUserStatuses, updateUserStatuses} from '../../../actions/userApi';
+import {getStudent, updateUser, getUserStatuses, updateUserStatuses, isAuthenticated} from '../../../actions/userApi';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -101,13 +101,12 @@ const Edit = ({user}) => {
 		formData.append('parentPhone', parentPhone);
 		formData.append('address', address);
 		formData.append('role', role);
-
-		updateUser(user._id, formData).then(res => {
+		const userId = isAuthenticated().user._id
+		updateUser(user._id, formData, userId).then(res => {
 			console.log(res.data);
-			if(res.status === '200'){
-				setOpen(true);
-				setMessage(res.data.message);
-			}
+			setOpen(true);
+			setMessage(res.data.message);
+
 		}).catch(err => {
 			console.log(err.response.data.error)
 			setOpenError(true);

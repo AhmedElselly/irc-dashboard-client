@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { isAuthenticated } from '../../../actions/userApi';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -189,7 +190,9 @@ const CourseForm = ({course}) => {
 		console.log('featured', programLanguage)
 		console.log('featured', programMode)
 		
-		create(formData).then(res => {
+		const userId = isAuthenticated().user._id;
+
+		create(formData, userId).then(res => {
 			console.log(res.data);
 			setMessage(res.data.message);
 			setOpen(true);

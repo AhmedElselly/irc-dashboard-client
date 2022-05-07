@@ -2,6 +2,7 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 
 const url = 'https://ircbackend.herokuapp.com';
+// const url = 'http://localhost:8000';
 
 export const login = async (email, password) => {
     const res = await axios.post(`${url}/api/users/login`, {
@@ -20,13 +21,13 @@ export const signup = async (email, name, password) => {
     return res;
 }
 
-export const addNewUser = async (formData) => {
-    const res = await axios.post(`${url}/api/users/add-new-user`, formData);
+export const addNewUser = async (formData, userId) => {
+    const res = await axios.post(`${url}/api/users/add-new-user/${userId}`, formData);
     return res;
 }
 
-export const updateUser = async (_id, formData) => {
-    const res = await axios.put(`${url}/api/users/student/${_id}/edit`, formData);
+export const updateUser = async (_id, formData, userId) => {
+    const res = await axios.put(`${url}/api/users/student/${_id}/edit/${userId}`, formData);
     return res;
 }
 

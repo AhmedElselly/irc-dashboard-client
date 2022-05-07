@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const url = 'https://ircbackend.herokuapp.com/api/courses';
+// const url = 'http://localhost:8000/api/courses';
 
-export const create = async formData => {
-    const res = await axios.post(`${url}/create`, formData);
+export const create = async (formData, userId) => {
+    const res = await axios.post(`${url}/create/${userId}`, formData);
     return res;
 }
 
@@ -17,12 +18,12 @@ export const getCourse = async _id => {
     return res;
 }
 
-export const update = async (_id, formData) => {
-    const res = await axios.put(`${url}/course/${_id}/update`, formData);
+export const update = async (_id, formData, userId) => {
+    const res = await axios.put(`${url}/course/${_id}/update/${userId}`, formData);
     return res;
 }
 
-export const remove = async (_id) => {
-    const res = await axios.delete(`${url}/create/${_id}`);
+export const remove = async (_id, userId) => {
+    const res = await axios.delete(`${url}/course/${_id}/${userId}`);
     return res;
 }

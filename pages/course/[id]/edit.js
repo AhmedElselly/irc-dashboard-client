@@ -185,7 +185,8 @@ const CourseForm = ({course}) => {
 		formData.append('programLanguage', programLanguage);
 		console.log('featured', programMode)
 		console.log('featured', programLanguage)
-		update(course._id, formData).then(res => {
+		const userId = isAuthenticated().user._id;
+		update(course._id, formData, userId).then(res => {
 			console.log(res.data);
 			setMessage(res.data.message);
 			setOpen(true);
