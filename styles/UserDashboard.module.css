@@ -1,0 +1,34 @@
+.container {
+    overflow-x: hidden;
+    padding-bottom: 100px;
+}
+
+.wrapper {
+    width: 97%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.left {
+    flex: 1;
+}
+
+.right {
+    flex: 5;
+}
+
+.postContainer {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    
+}
+
+.assignments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 97%;
+    margin: 0 auto;
+}

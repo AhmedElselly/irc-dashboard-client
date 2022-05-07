@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+}
+
+.left {
+    flex: 1;
+}
+.right {
+    flex: 5;
+}
+
+.top, .bottom {
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+}
+
+.bottom {
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+
+.formGroup {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #999;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.labelFile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.btn {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    background: #D01B59;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.required::after {
+    content: ' *';
+    color: 'red';
+}
+
+.textArea {
+    height: 200px;
+}

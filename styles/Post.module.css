@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+}
+
+.left {
+    flex: 1;
+}
+
+.right {
+    flex: 5;  
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.headerContainer {
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    width: 95%;
+}
+
+.wrapper {
+    display: flex;
+    width: 95%;
+    gap: 20px;
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+    margin-top: 50px;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    transition: .2s all ease-in-out;
+    cursor: pointer;
+}
+
+.post:hover {
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.image {
+    object-fit: contain;
+
+}
+.username {
+    text-align: center;
+}

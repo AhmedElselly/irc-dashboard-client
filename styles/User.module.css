@@ -1,0 +1,76 @@
+.container {
+    display: flex;
+}
+
+.left {
+    flex: 1;
+}
+
+.right {
+    flex: 6;
+}
+
+.top {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.link {
+    border: 1px solid green;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    color: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 50px;
+}
+
+.detailItem {
+    margin-bottom: 10px;
+}
+
+.itemKey {
+    margin-right: 5px;
+}
+
+.assignmentsContainer {
+    margin-top: 100px;
+    padding-bottom: 100px;
+}
+
+.postContainer {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    
+}
+
+.assignments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 97%;
+    margin: 0 auto;
+}

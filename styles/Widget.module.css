@@ -1,0 +1,45 @@
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    height: 100px;
+    padding: 10px;
+}
+
+.left,
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 14px;
+    color: gray;
+}
+
+.counter {
+    font-size: 28px;
+    font-weight: thin;
+}
+
+.link {
+    width: max-content;
+    font-size: 12px;
+    border-bottom: 1px solid gray;
+    cursor: pointer;
+}
+
+.percentage {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.icon {
+    align-self: flex-end;
+}
