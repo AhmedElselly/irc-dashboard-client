@@ -73,7 +73,8 @@ const Edit = ({user}) => {
 	const handleStatusChange = e => {
 		setStatus(e.target.value);
 		console.log(status)
-		updateUserStatuses(user._id, e.target.value).then(res => {
+		const userId = isAuthenticated().user._id
+		updateUserStatuses(user._id, e.target.value, userId).then(res => {
 			console.log(res.data);
 		})
 	}

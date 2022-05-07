@@ -56,8 +56,8 @@ export const getUserStatuses = async () => {
     return res;
 }
 
-export const updateUserStatuses = async (_id, status) => {
-    const res = await axios.put(`${url}/api/users/statuses/${_id}`, {
+export const updateUserStatuses = async (_id, status, userId) => {
+    const res = await axios.put(`${url}/api/users/statuses/${_id}/update/${userId}`, {
         status
     });
     return res;
