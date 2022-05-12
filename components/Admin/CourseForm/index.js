@@ -29,8 +29,16 @@ const CourseForm = ({course}) => {
 	const [launchPeripheralConnectionFlowCheck, setLaunchPeripheralConnectionFlowCheck] = useState(false);
 	const [programMode, setProgramMode] = useState([]);
 	const [programLanguage, setProgramLanguage] = useState([]);
-  const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [openError, setOpenError] = useState(false);
 	const [message, setMessage] = useState('');
+	const [messageError, setMessageError] = useState('');
+	const [state, setState] = useState({
+		vertical: 'top',
+		horizontal: 'center',
+	});
+	const {vertical, horizontal} = state;
+
 
 	const [values, setValues] = useState({
 		name: '',
@@ -169,35 +177,64 @@ const CourseForm = ({course}) => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		const formData = new FormData();
-		formData.append('name', name);
-		formData.append('image', image);
-		formData.append('description', description);
-		formData.append('helpLink', helpLink);
-		formData.append('learnMore', learnMore);
-		formData.append('type', type);
-		formData.append('manufactor', manufactor);
-		formData.append('featured', featured);
-		formData.append('disabled', disabled);
-		formData.append('useAutoScan', useAutoScan);
-		formData.append('bluetoothRequired', bluetoothRequired);
-		formData.append('initialConnectionRequired', initialConnectionRequired);
-		// formData.append('plugin', plugin);
-		formData.append('defaultBaudRate', defaultBaudRate);
-		formData.append('serialportRequired', serialportRequired);
-		formData.append('programMode', programMode);
-		formData.append('programLanguage', programLanguage);
-		console.log('featured', programLanguage)
-		console.log('featured', programMode)
-		
-		const userId = isAuthenticated().user._id;
+		if(!name.length){
+			setOpenError(true);
+			setMessageError(`Name of device is required`);
+		} 
+		else if(!description.length){
+			setOpenError(true);
+			setMessageError(`Description of device is required`);
+		} 
+		else if(!manufactor.length){
+			setOpenError(true);
+			setMessageError(`Manufactor of device is required`);
+		} 
+		else if (!helpLink.length){
+			setOpenError(true);
+			setMessageError(`Help Link of device is required`);
+		} 
+		else if (!type.length){
+			setOpenError(true);
+			setMessageError(`Type of device is required`);
+		} 
+		else if (!programMode.length){
+			setOpenError(true);
+			setMessageError(`Program mode of device is required`);
+		} 
+		else if (!programLanguage.length){
+			setOpenError(true);
+			setMessageError(`Program languages of device is required`);
+		} 
+		else {
+			const formData = new FormData();
+			formData.append('name', name);
+			formData.append('image', image);
+			formData.append('description', description);
+			formData.append('helpLink', helpLink);
+			formData.append('learnMore', learnMore);
+			formData.append('type', type);
+			formData.append('manufactor', manufactor);
+			formData.append('featured', featured);
+			formData.append('disabled', disabled);
+			formData.append('useAutoScan', useAutoScan);
+			formData.append('bluetoothRequired', bluetoothRequired);
+			formData.append('initialConnectionRequired', initialConnectionRequired);
+			// formData.append('plugin', plugin);
+			formData.append('defaultBaudRate', defaultBaudRate);
+			formData.append('serialportRequired', serialportRequired);
+			formData.append('programMode', programMode);
+			formData.append('programLanguage', programLanguage);
+			console.log('featured', programLanguage)
+			console.log('featured', programMode)
+			
+			const userId = isAuthenticated().user._id;
 
-		create(formData, userId).then(res => {
-			console.log(res.data);
-			setMessage(res.data.message);
-			setOpen(true);
-		});
-
+			create(formData, userId).then(res => {
+				console.log(res.data);
+				setMessage(res.data.message);
+				setOpen(true);
+			});
+		}
 	}
 
 	const handleClick = () => {
@@ -320,13 +357,17 @@ const CourseForm = ({course}) => {
 					<button className={styles.btn}>Add new course</button>
 				</form>
 			</div>
-			{open && (
-				<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-						{message}
-					</Alert>
-				</Snackbar>
-			)}
+		
+			<Snackbar anchorOrigin={{vertical, horizontal}} open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+					{message}
+				</Alert>
+			</Snackbar>
+			<Snackbar anchorOrigin={{vertical, horizontal}} open={openError} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+					{messageError}
+				</Alert>
+			</Snackbar>
 
 		</div>
 	)
