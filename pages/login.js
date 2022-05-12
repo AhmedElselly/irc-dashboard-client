@@ -48,8 +48,9 @@ const Login = props => {
     horizontal: 'center',
   });
 
+  const {vertical, horizontal} = state;
+
 	const {email, password, name, text} = values;
-	const {vertical, horizontal} = state;
 
 
 	const handleChange = e => {

@@ -1,21 +1,68 @@
+import { useEffect, useState, forwardRef } from 'react';
 import { getStudent, isAuthenticated } from '../../../actions/userApi';
 import { getStudentPosts } from '../../../actions/postApi';
+import { listByStudent, removeStudentEnrol } from '../../../actions/enrolApi';
 import Chart from '../../../components/Admin/Chart';
 import Sidebar from '../../../components/Admin/Sidebar';
 import styles from '../../../styles/User.module.css';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Moment from 'react-moment';
+import Snackbar from '@mui/material/Snackbar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import MuiAlert from '@mui/material/Alert';
 
-const User = ({user, assignments}) => {
+const Alert = forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+  
+const User = ({user, assignments, enrollments}) => {
 	console.log('user', user)
 	const [admin, setAdmin] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [openForm, setOpenForm] = useState(false);
+	const [message, setMessage] = useState('');
+	const [openError, setOpenError] = useState(false);
+	const [messageError, setMessageError] = useState('');
+	const [state, setState] = useState({
+    vertical: 'top',
+    horizontal: 'center',
+  });
+
+  const {vertical, horizontal} = state;
+
 	useEffect(() => {
 		if(isAuthenticated() && isAuthenticated().user.admin){
 			setAdmin(isAuthenticated().user.admin)
 		}
 	}, []);
+
+	const handleRemoveEnrol = (userId, enrolId) => {
+		removeStudentEnrol(userId, enrolId).then(res => {
+			console.log(res.data);
+			setOpen(true);
+			setMessage(res.data.message);
+		})
+	}
+
+	const generateEnrollments = () => {
+		return enrollments?.map(enrol => {
+			console.log(enrol)
+			return (
+				<div className={styles.card}>
+					<div className={styles.cardWrapper}>
+						<Image width={200} height={200} src={enrol.course.image.url} />
+						<button onClick={() => handleRemoveEnrol(enrol.student, enrol._id)} className={styles.btnRemove}>Remove Enrollment</button>
+					</div>
+					<div>{enrol.course.name}</div>
+					
+				</div>
+			)
+		})
+	}
 
 	const generateAssignments = () => {
 		return assignments?.map(post => {
@@ -29,6 +76,16 @@ const User = ({user, assignments}) => {
 			)
 		})
 	}
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			setOpen(false);
+			setOpenError(false);
+		}
+	
+		setOpen(false);
+		setOpenError(false);
+	};
 
 	return (
 		<div className={styles.container}>
@@ -97,6 +154,14 @@ const User = ({user, assignments}) => {
 				</div>
 				<Chart name={user.name} data={user.data}/>
 				<div className={styles.assignmentsContainer}>
+					<h3>Courses Enrolled</h3>
+					<div className={styles.assignments}>
+						{enrollments.length ? generateEnrollments(): (
+							<h1>User doesn't have enrolled courses</h1>
+						)}
+					</div>
+				</div>
+				<div className={styles.assignmentsContainer}>
 					<h3>Assignments</h3>
 					<div className={styles.assignments}>
 						{assignments.length ? generateAssignments(): (
@@ -105,6 +170,11 @@ const User = ({user, assignments}) => {
 					</div>
 				</div>
 			</div>
+			<Snackbar anchorOrigin={{vertical, horizontal}} open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+					{message}
+				</Alert>
+			</Snackbar>
 		</div>
 	)
 }
@@ -112,10 +182,13 @@ const User = ({user, assignments}) => {
 export const getServerSideProps = async ctx => {
 	const res = await getStudent(ctx.query.id);
 	const assignments = await getStudentPosts(ctx.query.id);
+	const enrols = await listByStudent(ctx.query.id);
+	console.log(enrols.data)
 	return{
 		props: {
 			user: res.data,
-			assignments: assignments.data
+			assignments: assignments.data,
+			enrollments: enrols.data
 		}
 	}
 }

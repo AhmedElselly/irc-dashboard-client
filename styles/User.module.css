@@ -8,6 +8,7 @@
 
 .right {
     flex: 6;
+    padding-bottom: 50px;
 }
 
 .top {
@@ -56,7 +57,7 @@
 
 .assignmentsContainer {
     margin-top: 100px;
-    padding-bottom: 100px;
+    /* padding-bottom: 100px; */
 }
 
 .postContainer {
@@ -74,3 +75,50 @@
     width: 97%;
     margin: 0 auto;
 }
+
+.card {
+    width: 350px;
+    border: 3px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 10px;
+    transition: .3s all ease-in-out;
+}
+
+.title {
+    font-weight: bold;
+    color: #333;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.type {
+    font-weight: bold;
+}
+
+.typeNames {
+    color: gray;
+    text-align: center;
+}
+
+.learnMore,
+.help {
+    color: rgb(211, 49, 76);
+    font-weight: bold;
+    text-align: center;
+}
+
+.cardWrapper {
+    display: flex;
+    align-items: flex-start;
+}
+
+.btnRemove {
+    border: 1px solid rgb(211, 49, 76);
+    background: #fff;
+    color: rgb(211, 49, 76);
+    cursor: pointer;
+}
+

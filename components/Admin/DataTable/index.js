@@ -75,10 +75,16 @@ const headCells = [
     label: 'Email',
   },
   {
-    _id: 'joined',
+    _id: 'birth',
     numeric: true,
     disablePadding: false,
-    label: 'Joined',
+    label: 'Birth',
+  },
+  {
+    _id: 'role',
+    numeric: true,
+    disablePadding: false,
+    label: 'Role',
   },
   {
     _id: 'actions',
@@ -372,6 +378,9 @@ export default function EnhancedTable({title}) {
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.dateOfBirth}</TableCell>
+                      {row.admin && <TableCell align="right">{row.admin && ('Admin')}</TableCell>}
+                      {row.student && <TableCell align="right">{row.student && ('Student')}</TableCell>}
+                      {row.school && <TableCell align="right">{row.school && ('School')}</TableCell>}
                       <TableCell align="right">
                         <Link href={`/user/${row._id}`}>
                           <a style={{

@@ -16,19 +16,19 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const CourseForm = ({course}) => {
 	console.log(course)
-	const [bluetoothCheck, setBluetoothCheck] = useState(false);
+	const [bluetoothCheck, setBluetoothCheck] = useState(course.bluetoothRequired);
 	const [uploadCheck, setUploadCheck] = useState(false);
-	const [serialportCheck, setSerialportCheck] = useState(false);
 	const [realtimeCheck, setRealtimeCheck] = useState(false);
+	const [serialportCheck, setSerialportCheck] = useState(course.bluetoothRequired);	
 	const [cppCheck, setCppCheck] = useState(false);
 	const [cCheck, setCCheck] = useState(false);
 	const [blockCheck, setBlockCheck] = useState(false);
 	const [pythonCheck, setPythonCheck] = useState(false);
-	const [featuredCheck, setFeaturedCheck] = useState(false);
-	const [disabledCheck, setDisabledCheck] = useState(false);
-	const [useAutoScanCheck, setUseAutoScanCheck] = useState(false);
-	const [initialConnectionRequiredCheck, setInitialConnectionRequiredCheck] = useState(false);
-	const [launchPeripheralConnectionFlowCheck, setLaunchPeripheralConnectionFlowCheck] = useState(false);
+	const [featuredCheck, setFeaturedCheck] = useState(course.featured);
+	const [disabledCheck, setDisabledCheck] = useState(course.disabled);
+	const [useAutoScanCheck, setUseAutoScanCheck] = useState(course.useAutoScan);
+	const [initialConnectionRequiredCheck, setInitialConnectionRequiredCheck] = useState(course.initialConnectionRequired);
+	const [launchPeripheralConnectionFlowCheck, setLaunchPeripheralConnectionFlowCheck] = useState(course.launchPeripheralConnectionFlow);
 	const [programMode, setProgramMode] = useState([]);
 	const [programLanguage, setProgramLanguage] = useState([]);
 	const [open, setOpen] = useState(false);
@@ -161,6 +161,8 @@ const CourseForm = ({course}) => {
 	
 	}
 
+	console.log('bluetoothRequired', bluetoothRequired)
+
 	const handleProgramLanguage = e => {
 		console.log('programMode', e.target.id)
 		let newArray = [...programLanguage, e.target.id];
@@ -234,6 +236,7 @@ const CourseForm = ({course}) => {
 			console.log('featured', programMode)
 			console.log('featured', programLanguage)
 			const userId = isAuthenticated().user._id;
+			console.log('bluetooth', bluetoothRequired)
 			update(course._id, formData, userId).then(res => {
 				console.log(res.data);
 				setMessage(res.data.message);
