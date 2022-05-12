@@ -34,7 +34,7 @@ const New = props => {
 		email: '',
 		password: '',
 		name: '',
-		gender: '',
+		gender: 'male',
 		schoolName: '',
 		dateOfBirth: '',
 		grade: '',
@@ -45,7 +45,7 @@ const New = props => {
 		parentEmail: '',
 		parentPhone: '',
 		address: '',
-		role: ''
+		role: 'student'
 	});
 
 	const {email, password, name, gender, schoolName, dateOfBirth, grade, city, image, phone, nameOfParent, parentEmail, parentPhone, address, role} = values;
@@ -65,36 +65,66 @@ const New = props => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		const formData = new FormData();
-		formData.append('email', email);
-		formData.append('password', password);
-		formData.append('gender', gender);
-		formData.append('name', name);
-		formData.append('schoolName', schoolName);
-		formData.append('dateOfBirth', dateOfBirth);
-		formData.append('grade', grade);
-		formData.append('city', city);
-		formData.append('image', image);
-		formData.append('phone', phone);
-		formData.append('nameOfParent', nameOfParent);
-		formData.append('parentEmail', parentEmail);
-		formData.append('parentPhone', parentPhone);
-		formData.append('address', address);
-		formData.append('role', role);
 
-		console.log(values)
-		const userId = isAuthenticated().user._id;
-		addNewUser(formData, userId).then(res => {
-			console.log(res.data);
-			
-			setOpen(true);
-			setMessage(res.data.message);
-			
-		}).catch(err => {
-			console.log(err.response.data.error)
+		if(!email.length){
 			setOpenError(true);
-			setMessageError(err.response.data.error);
-		});
+			setMessageError(`Email is required`);
+		} else if (!password.length){
+			setOpenError(true);
+			setMessageError(`Password is required`);
+		}else if (!name.length){
+			setOpenError(true);
+			setMessageError(`Name is required`);
+		
+		}else if (!schoolName.length){
+			setOpenError(true);
+			setMessageError(`School name is required`);
+		
+		}else if (!dateOfBirth.length){
+			setOpenError(true);
+			setMessageError(`Date of birth is required`);
+		} else if (!grade.length){
+			setOpenError(true);
+			setMessageError(`Grade is required`);
+		} else if (!city.length){
+			setOpenError(true);
+			setMessageError(`City is required`);
+		} 
+		else {
+			const formData = new FormData();
+			formData.append('email', email);
+			formData.append('password', password);
+			formData.append('gender', gender);
+			formData.append('name', name);
+			formData.append('schoolName', schoolName);
+			formData.append('dateOfBirth', dateOfBirth);
+			formData.append('grade', grade);
+			formData.append('city', city);
+			formData.append('image', image);
+			formData.append('phone', phone);
+			formData.append('nameOfParent', nameOfParent);
+			formData.append('parentEmail', parentEmail);
+			formData.append('parentPhone', parentPhone);
+			formData.append('address', address);
+			formData.append('role', role);
+
+			console.log(values)
+			const userId = isAuthenticated().user._id;
+		
+		
+			addNewUser(formData, userId).then(res => {
+				console.log(res.data);
+				
+				setOpen(true);
+				setMessage(res.data.message);
+				
+			}).catch(err => {
+				console.log(err.response.data)
+				setOpenError(true);
+				setMessageError(`${err.response.data.err.errors.name.path} is required`);
+			});
+		}
+		
 	}
 
 	const handleClick = () => {
