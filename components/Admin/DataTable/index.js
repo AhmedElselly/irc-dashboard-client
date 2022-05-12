@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Link from 'next/link';
-import {getStudents, isAuthenticated, getSchools, getUsers} from '../../../actions/userApi';
+import {getStudents, isAuthenticated, getSchools, getUsers, removeUser} from '../../../actions/userApi';
 import {useRouter} from 'next/router';
 
 function descendingComparator(a, b, orderBy) {
@@ -145,7 +145,13 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, title } = props;
+  const { numSelected, title, rows, onDelete} = props;
+
+  const handleRemove = (num) => {
+    console.log('delete num', num)
+    console.log('delete', rows[num])
+    onDelete(rows[num]);
+  }
 
   return (
     <Toolbar
@@ -180,7 +186,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={() => handleRemove(numSelected)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -208,7 +214,7 @@ export default function EnhancedTable({title}) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
-
+  const [toRemove, setToRemove] = React.useState([]);
 
   const getAllUsers = () => {
     // console.log(router.pathname)
@@ -288,6 +294,18 @@ export default function EnhancedTable({title}) {
     setDense(event.target.checked);
   };
 
+  const handleRemove = (_id) => {
+    
+    console.log('to remove', _id);
+    const userId = isAuthenticated().user._id;
+    let newArr;
+    removeUser(_id, userId).then(res => {
+      console.log(res.data);
+      newArr = rows.filter(user => user._id !== _id);
+      setRows(newArr);
+    })
+  }
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -297,7 +315,7 @@ export default function EnhancedTable({title}) {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar title={title} numSelected={selected.length} />
+        {/* <EnhancedTableToolbar onDelete={handleRemove} rows={rows} title={title} numSelected={selected.length} /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -358,8 +376,8 @@ export default function EnhancedTable({title}) {
                         <Link href={`/user/${row._id}`}>
                           <a style={{
                             background: '#fff',
-                            color: '#D01B59',
-                            border: '1px solid #D01B59',
+                            color: 'blueviolet',
+                            border: '1px solid blueviolet',
                             paddingLeft: 15,
                             paddingRight: 15,
                             paddingTop: 5,
@@ -380,6 +398,22 @@ export default function EnhancedTable({title}) {
                             marginLeft: 5
                           }}>Edit</a>
                         </Link>}
+                       {isAuthenticated() && isAuthenticated().user.admin && <button style={{
+                            background: '#fff',
+                            color: '#D01B59',
+                            border: '1px solid #D01B59',
+                            paddingLeft: 15,
+                            paddingRight: 15,
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                            borderRadius: 5,
+                            marginLeft: 5,
+                            cursor: 'pointer'
+                          }}
+                          onClick={() => handleRemove(row._id)}
+                          >
+                          Remove
+                        </button>}
                       </TableCell>
                       
                     </TableRow>
