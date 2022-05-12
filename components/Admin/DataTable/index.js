@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Link from 'next/link';
-import {getStudents, isAuthenticated, getSchools} from '../../../actions/userApi';
+import {getStudents, isAuthenticated, getSchools, getUsers} from '../../../actions/userApi';
 import {useRouter} from 'next/router';
 
 function descendingComparator(a, b, orderBy) {
@@ -210,16 +210,23 @@ export default function EnhancedTable({title}) {
   const [rows, setRows] = React.useState([]);
 
 
-  const getUsers = () => {
+  const getAllUsers = () => {
     // console.log(router.pathname)
+    
     if(router.pathname === '/students'){
       getStudents().then(res => {
         console.log(res.data);
         setRows(res.data);
         
       })
-    } else {
+    } else if(router.pathname === '/schools') {
       getSchools().then(res => {
+        console.log(res.data);
+        setRows(res.data);
+        
+      })
+    } else {
+      getUsers().then(res => {
         console.log(res.data);
         setRows(res.data);
         
@@ -229,7 +236,7 @@ export default function EnhancedTable({title}) {
   };
 
   React.useEffect(() => {
-    getUsers();
+    getAllUsers();
     console.log('rows', rows)
   }, []);
 

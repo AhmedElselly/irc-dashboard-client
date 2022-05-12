@@ -1,6 +1,6 @@
 import styles from '../../../styles/AdminHome.module.css';
 import Chart from '../Chart';
-import Table from '../Table';
+import DataTable from '../DataTable';
 import Sidebar from '../Sidebar';
 import Widget from '../Widget';
 
@@ -31,7 +31,7 @@ const AdminHome = props => {
 				<div className={styles.charts}>
 					{/* <Chart/> */}
 					<span className={styles.userTitle}>Users</span>
-					<Table/>
+					<DataTable title='Users'/>
 				</div>
 			</div>
 		</div>

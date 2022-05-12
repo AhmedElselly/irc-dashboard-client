@@ -30,6 +30,11 @@ const Sidebar = props => {
 			<hr className={styles.hr}/>
 			<div className={styles.center}>
 				<ul className={styles.items}>
+				<Link href='/dashboard' passHref><a><li className={styles.link}>
+						<PersonIcon className={styles.icon}/>						
+						<span className={styles.text}>All Users</span>
+					</li>
+					</a></Link>
 				<Link href='/students' passHref><a><li className={styles.link}>
 						<PersonIcon className={styles.icon}/>						
 						<span className={styles.text}>Students</span>
