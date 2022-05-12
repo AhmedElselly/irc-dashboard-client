@@ -23,7 +23,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Link from 'next/link';
 import {isAuthenticated} from '../../../actions/userApi';
-import {index} from '../../../actions/courseApi';
+import {index, remove} from '../../../actions/courseApi';
 
 
 function createData(_id, username, email, joined, action) {
@@ -287,6 +287,18 @@ export default function CoursesEnhancedTable({title}) {
     setDense(event.target.checked);
   };
 
+  const handleRemove = (_id) => {
+    
+    console.log('to remove', _id);
+    const userId = isAuthenticated().user._id;
+    let newArr;
+    remove(_id, userId).then(res => {
+      console.log(res.data);
+      newArr = rows.filter(user => user._id !== _id);
+      setRows(newArr);
+    })
+  }
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -357,8 +369,8 @@ export default function CoursesEnhancedTable({title}) {
                         <Link href={`/course/${row._id}`}>
                           <a style={{
                             background: '#fff',
-                            color: '#D01B59',
-                            border: '1px solid #D01B59',
+                            color: 'blueviolet',
+                            border: '1px solid blueviolet',
                             paddingLeft: 15,
                             paddingRight: 15,
                             paddingTop: 5,
@@ -379,6 +391,22 @@ export default function CoursesEnhancedTable({title}) {
                             marginLeft: 5
                           }}>Edit</a>
                         </Link>}
+                        {isAuthenticated() && isAuthenticated().user.admin && <button style={{
+                            background: '#fff',
+                            color: '#D01B59',
+                            border: '1px solid #D01B59',
+                            paddingLeft: 15,
+                            paddingRight: 15,
+                            paddingTop: 5,
+                            paddingBottom: 5,
+                            borderRadius: 5,
+                            marginLeft: 5,
+                            cursor: 'pointer'
+                          }}
+                          onClick={() => handleRemove(row._id)}
+                          >
+                          Remove
+                        </button>}
                       </TableCell>
                       
                     </TableRow>

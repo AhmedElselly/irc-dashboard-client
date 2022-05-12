@@ -24,6 +24,6 @@ export const update = async (_id, formData, userId) => {
 }
 
 export const remove = async (_id, userId) => {
-    const res = await axios.delete(`${url}/course/${_id}/${userId}`);
+    const res = await axios.delete(`${url}/course/${_id}/remove/${userId}`);
     return res;
 }

@@ -87,10 +87,12 @@ const Login = props => {
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
-		  setOpen(false);
+			setOpen(false);
+			setOpenError(false);
 		}
 	
 		setOpen(false);
+		setOpenError(false);
 	};
 
 	if(loaded){

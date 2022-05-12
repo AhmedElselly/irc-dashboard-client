@@ -233,6 +233,43 @@ const CourseForm = ({course}) => {
 				console.log(res.data);
 				setMessage(res.data.message);
 				setOpen(true);
+				setBluetoothCheck(false);
+				setUploadCheck(false);
+				setUseAutoScanCheck(false);
+				setFeaturedCheck(false);
+				setSerialportCheck(false);
+				setInitialConnectionRequiredCheck(false);
+				setLaunchPeripheralConnectionFlowCheck(false);
+				setRealtimeCheck(false);
+				setDisabledCheck(false);
+				setCppCheck(false);
+				setCCheck(false);
+				setPythonCheck(false);
+				setBlockCheck(false);
+
+				setValues({
+					name: '',
+					image: '',
+					description: '',
+					helpLink: '',
+					learnMore: '',
+					type: '',
+					bluetoothRequired: bluetoothCheck,
+					upload: uploadCheck,
+					useAutoScan: useAutoScanCheck,
+					manufactor: '',
+					defaultBaudRate: '',
+					featured: featuredCheck,
+					serialportRequired: serialportCheck,
+					initialConnectionRequired: initialConnectionRequiredCheck,
+					launchPeripheralConnectionFlow: launchPeripheralConnectionFlowCheck,
+					realtime: realtimeCheck,
+					disabled: disabledCheck,
+					cpp: cppCheck,
+					c: cCheck,
+					python: pythonCheck,
+					block: blockCheck,
+				})
 			});
 		}
 	}
@@ -243,10 +280,12 @@ const CourseForm = ({course}) => {
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+		setOpen(false);
+		setOpenError(false);
     }
 
     setOpen(false);
+	setOpenError(false);
   };
 
 
@@ -266,7 +305,10 @@ const CourseForm = ({course}) => {
 							Image: <DriveFolderUploadOutlinedIcon className={styles.icon}/>
 						</label>
 						<input type='file' name='image' hidden id='file' className={styles.inputFile} onChange={handleChange}/>
-						<span>{image && image.name}</span>
+						{/* <span>{image && image.name}</span> */}
+						{image && (
+							<img src={URL.createObjectURL(image)} />
+						)}
 					</div>
 					<div className={styles.formGroup}>
 						<label className={`${styles.label} ${styles.required}`} htmlFor='description'>Description</label>

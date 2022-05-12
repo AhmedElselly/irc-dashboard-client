@@ -1,7 +1,8 @@
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useEffect } from 'react';
 import styles from '../../../styles/CourseEdit.module.css';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import { update, getCourse } from '../../../actions/courseApi';
+import { isAuthenticated } from '../../../actions/userApi';
 import Sidebar from '../../../components/Admin/Sidebar';
 
 import Stack from '@mui/material/Stack';
@@ -30,8 +31,15 @@ const CourseForm = ({course}) => {
 	const [launchPeripheralConnectionFlowCheck, setLaunchPeripheralConnectionFlowCheck] = useState(false);
 	const [programMode, setProgramMode] = useState([]);
 	const [programLanguage, setProgramLanguage] = useState([]);
-  const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [openError, setOpenError] = useState(false);
 	const [message, setMessage] = useState('');
+	const [messageError, setMessageError] = useState('');
+	const [state, setState] = useState({
+		vertical: 'top',
+		horizontal: 'center',
+	});
+	const {vertical, horizontal} = state;
 	
 	const [values, setValues] = useState({
 		name: course.name ? course.name :'',
@@ -41,7 +49,7 @@ const CourseForm = ({course}) => {
 		learnMore: course.learnMore ? course.learnMore :'',
 		type: course.type ? course.type :'',
 		bluetoothRequired: course.bluetoothRequired ? course.bluetoothRequired : bluetoothCheck,
-		upload: course.upload ? course.upload : uploadCheck,
+		upload: course.programMode[1] ? course.programMode[1] : uploadCheck,
 		useAutoScan: course.useAutoScan ? course.useAutoScan : useAutoScanCheck,
 		manufactor: course.manufactor ? course.manufactor :'',
 		defaultBaudRate: course.defaultBaudRate ? course.defaultBaudRate :'',
@@ -49,7 +57,7 @@ const CourseForm = ({course}) => {
 		serialportRequired: course.serialportRequired ? course.serialportRequired : serialportCheck,
 		initialConnectionRequired: course.initialConnectionRequired ? course.initialConnectionRequired : initialConnectionRequiredCheck,
 		launchPeripheralConnectionFlow: course.launchPeripheralConnectionFlow ? course.launchPeripheralConnectionFlow : launchPeripheralConnectionFlowCheck,
-		realtime: course.realtime ? course.realtime : realtimeCheck,
+		realtime: course.programMode[0] ? course.programMode[0] : realtimeCheck,
 		disabled: course.disabled ? course.disabled : disabledCheck,
 		cpp: course.programLanguage.includes('cpp') ? true : cppCheck,
 		c: course.programLanguage.includes('c') ? true : cCheck,
@@ -85,6 +93,18 @@ const CourseForm = ({course}) => {
 	} = values;
 
 	console.log('featured', featured)
+
+	useEffect(() => {
+		if(course.programLanguage.length > 0){
+			setProgramLanguage([...course.programLanguage])
+		}
+		
+		if(course.programMode.length > 0){
+			setProgramMode([...course.programMode])
+		}
+		
+		console.log('programLanguage', programLanguage)
+	}, []);
 
 	const handleChange = e => {
 		const value = e.target.name === 'image' ? e.target.files[0] : e.target.value;
@@ -165,33 +185,63 @@ const CourseForm = ({course}) => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		const formData = new FormData();
-		formData.append('name', name);
-		formData.append('image', image);
-		formData.append('description', description);
-		formData.append('helpLink', helpLink);
-		formData.append('learnMore', learnMore);
-		formData.append('type', type);
-		formData.append('manufactor', manufactor);
-		formData.append('featured', featured);
-		formData.append('disabled', disabled);
-		formData.append('useAutoScan', useAutoScan);
-		formData.append('bluetoothRequired', bluetoothRequired);
-		formData.append('initialConnectionRequired', initialConnectionRequired);
-		// formData.append('plugin', plugin);
-		formData.append('defaultBaudRate', defaultBaudRate);
-		formData.append('serialportRequired', serialportRequired);
-		formData.append('programMode', programMode);
-		formData.append('programLanguage', programLanguage);
-		console.log('featured', programMode)
-		console.log('featured', programLanguage)
-		const userId = isAuthenticated().user._id;
-		update(course._id, formData, userId).then(res => {
-			console.log(res.data);
-			setMessage(res.data.message);
-			setOpen(true);
-		});
+		if(!name.length){
+			setOpenError(true);
+			setMessageError(`Name of device is required`);
+		} 
+		else if(!description.length){
+			setOpenError(true);
+			setMessageError(`Description of device is required`);
+		} 
+		else if(!manufactor.length){
+			setOpenError(true);
+			setMessageError(`Manufactor of device is required`);
+		} 
+		else if (!helpLink.length){
+			setOpenError(true);
+			setMessageError(`Help Link of device is required`);
+		} 
+		else if (!type.length){
+			setOpenError(true);
+			setMessageError(`Type of device is required`);
+		} 
+		else if (!programMode.length){
+			setOpenError(true);
+			setMessageError(`Program mode of device is required`);
+		} 
+		else if (!programLanguage.length){
+			setOpenError(true);
+			setMessageError(`Program languages of device is required`);
+		} else {
+			const formData = new FormData();
+			formData.append('name', name);
+			formData.append('image', image);
+			formData.append('description', description);
+			formData.append('helpLink', helpLink);
+			formData.append('learnMore', learnMore);
+			formData.append('type', type);
+			formData.append('manufactor', manufactor);
+			formData.append('featured', featured);
+			formData.append('disabled', disabled);
+			formData.append('useAutoScan', useAutoScan);
+			formData.append('bluetoothRequired', bluetoothRequired);
+			formData.append('initialConnectionRequired', initialConnectionRequired);
+			// formData.append('plugin', plugin);
+			formData.append('defaultBaudRate', defaultBaudRate);
+			formData.append('serialportRequired', serialportRequired);
+			formData.append('programMode', programMode);
+			formData.append('programLanguage', programLanguage);
+			console.log('featured', programMode)
+			console.log('featured', programLanguage)
+			const userId = isAuthenticated().user._id;
+			update(course._id, formData, userId).then(res => {
+				console.log(res.data);
+				setMessage(res.data.message);
+				setOpen(true);
+			});
 
+		}
+		
 	}
 
 	const handleClick = () => {
@@ -200,10 +250,23 @@ const CourseForm = ({course}) => {
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
+		setOpen(false);
+		setOpenError(false);
       return;
     }
 
     setOpen(false);
+	setOpenError(false);
+
+  };
+
+  const handleErrorClose = (event, reason) => {
+    if (reason === 'clickaway') {
+		setOpenError(false);
+      return;
+    }
+
+    setOpenError(false);
   };
 
 
@@ -229,7 +292,9 @@ const CourseForm = ({course}) => {
 							Image: <DriveFolderUploadOutlinedIcon className={styles.icon}/>
 						</label>
 						<input type='file' name='image' hidden id='file' className={styles.inputFile} onChange={handleChange}/>
-						<span>{image && image.name}</span>
+						{image && (
+							<img src={URL.createObjectURL(image)} />
+						)}
 					</div>
 					<div className={styles.formGroup}>
 						<label className={`${styles.label} ${styles.required}`} htmlFor='description'>Description</label>
@@ -321,13 +386,16 @@ const CourseForm = ({course}) => {
 					<button className={styles.btn}>Update device</button>
 				</form>
 			</div>
-			{open && (
-				<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-					<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-						{message}
-					</Alert>
-				</Snackbar>
-			)}
+			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+					{message}
+				</Alert>
+			</Snackbar>
+			<Snackbar anchorOrigin={{vertical, horizontal}} open={openError} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+					{messageError}
+				</Alert>
+			</Snackbar>
 		</div>
 		</div>
 	)
