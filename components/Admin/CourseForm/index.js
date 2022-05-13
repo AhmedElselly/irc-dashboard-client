@@ -53,7 +53,7 @@ const CourseForm = ({course}) => {
 		manufactor: '',
 		defaultBaudRate: '',
 		featured: featuredCheck,
-		serialportRequired: serialportCheck,
+		serialPortalRequired: serialportCheck,
 		initialConnectionRequired: initialConnectionRequiredCheck,
 		launchPeripheralConnectionFlow: launchPeripheralConnectionFlowCheck,
 		realtime: realtimeCheck,
@@ -77,7 +77,7 @@ const CourseForm = ({course}) => {
 		upload,
 		manufactor,
 		defaultBaudRate,
-		serialportRequired,
+		serialPortalRequired,
 		initialConnectionRequired,
 		realtime,
 		featured,
@@ -129,9 +129,9 @@ const CourseForm = ({course}) => {
 			setValues({...values, useAutoScan: !useAutoScanCheck})
 		} 
 
-		if(e.target.name === 'serialportRequired') {
+		if(e.target.name === 'serialPortalRequired') {
 			setSerialportCheck(!serialportCheck);
-			setValues({...values, serialportRequired: !serialportCheck})
+			setValues({...values, serialPortalRequired: !serialportCheck})
 		} 
 		
 		if(e.target.name === 'initialConnectionRequired') {
@@ -221,7 +221,7 @@ const CourseForm = ({course}) => {
 			formData.append('initialConnectionRequired', initialConnectionRequired);
 			// formData.append('plugin', plugin);
 			formData.append('defaultBaudRate', defaultBaudRate);
-			formData.append('serialportRequired', serialportRequired);
+			formData.append('serialPortalRequired', serialPortalRequired);
 			formData.append('programMode', programMode);
 			formData.append('programLanguage', programLanguage);
 			console.log('featured', programLanguage)
@@ -260,7 +260,7 @@ const CourseForm = ({course}) => {
 					manufactor: '',
 					defaultBaudRate: '',
 					featured: featuredCheck,
-					serialportRequired: serialportCheck,
+					serialPortalRequired: serialportCheck,
 					initialConnectionRequired: initialConnectionRequiredCheck,
 					launchPeripheralConnectionFlow: launchPeripheralConnectionFlowCheck,
 					realtime: realtimeCheck,
@@ -349,7 +349,7 @@ const CourseForm = ({course}) => {
 							<label className={`${styles.labelCheckbox}`} htmlFor='requires'>Bluetooth</label>
 						</div>
 						<div className={styles.checkboxContainer}>
-							<input type='checkbox' name='serialportRequired' value={serialportRequired} className={styles.checkbox} check={serialportCheck} onChange={handleCheck} />
+							<input type='checkbox' name='serialPortalRequired' value={serialPortalRequired} className={styles.checkbox} check={serialportCheck} onChange={handleCheck} />
 							<label className={`${styles.labelCheckbox}`} htmlFor='serialportRequired'>Serial Port</label>
 						</div>
 						<div className={styles.checkboxContainer}>

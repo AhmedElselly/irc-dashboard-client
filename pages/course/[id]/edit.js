@@ -19,7 +19,7 @@ const CourseForm = ({course}) => {
 	const [bluetoothCheck, setBluetoothCheck] = useState(course.bluetoothRequired);
 	const [uploadCheck, setUploadCheck] = useState(false);
 	const [realtimeCheck, setRealtimeCheck] = useState(false);
-	const [serialportCheck, setSerialportCheck] = useState(course.bluetoothRequired);	
+	const [serialPortalCheck, setSerialportCheck] = useState(course.serialPortalRequired);	
 	const [cppCheck, setCppCheck] = useState(false);
 	const [cCheck, setCCheck] = useState(false);
 	const [blockCheck, setBlockCheck] = useState(false);
@@ -54,7 +54,7 @@ const CourseForm = ({course}) => {
 		manufactor: course.manufactor ? course.manufactor :'',
 		defaultBaudRate: course.defaultBaudRate ? course.defaultBaudRate :'',
 		featured: course.featured ? course.featured : featuredCheck,
-		serialportRequired: course.serialportRequired ? course.serialportRequired : serialportCheck,
+		serialPortalRequired: course.serialPortalRequired ? course.serialPortalRequired : serialPortalCheck,
 		initialConnectionRequired: course.initialConnectionRequired ? course.initialConnectionRequired : initialConnectionRequiredCheck,
 		launchPeripheralConnectionFlow: course.launchPeripheralConnectionFlow ? course.launchPeripheralConnectionFlow : launchPeripheralConnectionFlowCheck,
 		realtime: course.programMode[0] ? course.programMode[0] : realtimeCheck,
@@ -78,7 +78,7 @@ const CourseForm = ({course}) => {
 		upload,
 		manufactor,
 		defaultBaudRate,
-		serialportRequired,
+		serialPortalRequired,
 		initialConnectionRequired,
 		realtime,
 		featured,
@@ -144,9 +144,10 @@ const CourseForm = ({course}) => {
 			setValues({...values, useAutoScan: !useAutoScanCheck})
 		} 
 
-		if(e.target.name === 'serialportRequired') {
-			setSerialportCheck(!serialportCheck);
-			setValues({...values, serialportRequired: !serialportCheck})
+		if(e.target.name === 'serialPortalRequired') {
+			setSerialportCheck(!serialPortalCheck);
+			setValues({...values, serialPortalRequired: !serialPortalCheck})
+			console.log('serialPortalRequired', serialPortalRequired)
 		} 
 		
 		if(e.target.name === 'initialConnectionRequired') {
@@ -230,13 +231,13 @@ const CourseForm = ({course}) => {
 			formData.append('initialConnectionRequired', initialConnectionRequired);
 			// formData.append('plugin', plugin);
 			formData.append('defaultBaudRate', defaultBaudRate);
-			formData.append('serialportRequired', serialportRequired);
+			formData.append('serialPortalRequired', serialPortalRequired);
 			formData.append('programMode', programMode);
 			formData.append('programLanguage', programLanguage);
 			console.log('featured', programMode)
 			console.log('featured', programLanguage)
 			const userId = isAuthenticated().user._id;
-			console.log('bluetooth', bluetoothRequired)
+			console.log('serialPortalRequired', serialPortalRequired)
 			update(course._id, formData, userId).then(res => {
 				console.log(res.data);
 				setMessage(res.data.message);
@@ -339,7 +340,7 @@ const CourseForm = ({course}) => {
 							<label className={`${styles.labelCheckbox}`} htmlFor='requires'>Bluetooth</label>
 						</div>
 						<div className={styles.checkboxContainer}>
-							<input type='checkbox' name='serialportRequired' value={serialportRequired} defaultChecked={serialportRequired} className={styles.checkbox} check={serialportCheck} onChange={handleCheck} />
+							<input type='checkbox' name='serialPortalRequired' value={serialPortalRequired} defaultChecked={serialPortalRequired} className={styles.checkbox} check={serialPortalCheck} onChange={handleCheck} />
 							<label className={`${styles.labelCheckbox}`} htmlFor='serialportRequired'>Serial Port</label>
 						</div>
 						<div className={styles.checkboxContainer}>

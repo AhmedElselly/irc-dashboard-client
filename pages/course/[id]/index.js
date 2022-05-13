@@ -7,6 +7,7 @@ import Link from 'next/link';
 const url = 'http://localhost:8000/api/courses';
 
 const Course = ({course}) => {
+	console.log(course)
 	return (
 		<div className={styles.container}>
 			<div className={styles.left}>
