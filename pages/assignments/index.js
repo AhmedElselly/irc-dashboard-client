@@ -24,7 +24,7 @@ const Assignments = props => {
 					<a>
 						<div className={styles.post}>
 							<Image className={styles.image} width={100} height={100} src={`http://localhost:8000/api/posts/image/${post._id}`} />
-							<h4 className={styles.username}>{post.user.name}</h4>
+							<h4 className={styles.username}>{post.user && post.user.name}</h4>
 						</div>
 					</a>
 				</Link>
