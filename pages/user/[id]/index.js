@@ -15,6 +15,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import MuiAlert from '@mui/material/Alert';
 
+const url = 'https://ircbackend.herokuapp.com';
+// const url = 'http://localhost:8000';
+
 const Alert = forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -68,7 +71,7 @@ const User = ({user, assignments, enrollments}) => {
 		return assignments?.map(post => {
 			return (
 				<div className={styles.postContainer}>
-					<Image width={200} height={200} src={`http://localhost:8000/api/posts/image/${post._id}`} />
+					<Image width={200} height={200} src={`${url}/api/posts/image/${post._id}`} />
 					<span>
 						Assigned At: <Moment fromNow ago>{post.createdAt}</Moment> ago
 					</span>
