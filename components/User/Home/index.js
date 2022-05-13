@@ -8,7 +8,8 @@ import Chart from '../../../components/Admin/Chart';
 import Image from 'next/image';
 import Moment from 'react-moment';
 
-const url = 'http://localhost:8000/api/posts/image';
+const url = 'https://ircbackend.herokuapp.com/api/posts/image';
+// const url = 'http://localhost:8000/api/posts/image';
 
 const UserDashboard = ({user}) => {
 	const [posts, setPosts] = useState([]);
@@ -27,7 +28,7 @@ const UserDashboard = ({user}) => {
 		return posts?.map(post => {
 			return (
 				<div className={styles.postContainer}>
-					<Image width={200} height={200} src={`http://localhost:8000/api/posts/image/${post._id}`} />
+					<Image width={200} height={200} src={`${url}/${post._id}`} />
 					<span>
 						Assigned At: <Moment fromNow ago>{post.createdAt}</Moment> ago
 					</span>
