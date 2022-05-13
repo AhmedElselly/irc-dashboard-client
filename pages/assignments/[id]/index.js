@@ -7,7 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Moment from 'react-moment';
 
-const url = 'https://ircbackend.herokuapp.com'
+const url = 'https://ircbackend.herokuapp.com';
+// const url = 'http://localhost:8000';
 
 const assignment = ({post}) => {
        

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import styles from '../../styles/Post.module.css';
 import Sidebar from '../../components/Admin/Sidebar';
 
-const url = 'http://localhost:8000/api/posts'
+const url = 'https://ircbackend.herokuapp.com/api/posts'
+// const url = 'http://localhost:8000/api/posts'
 
 const Assignments = props => {
 	const [posts, setPosts] = useState([]);
@@ -23,7 +24,7 @@ const Assignments = props => {
 				<Link href={`/assignments/${post._id}`} passHref>
 					<a>
 						<div className={styles.post}>
-							<Image className={styles.image} width={100} height={100} src={`http://localhost:8000/api/posts/image/${post._id}`} />
+							<Image className={styles.image} width={100} height={100} src={`${url}/image/${post._id}`} />
 							<h4 className={styles.username}>{post.user && post.user.name}</h4>
 						</div>
 					</a>
