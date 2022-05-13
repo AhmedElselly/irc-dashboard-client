@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost', 'res.cloudinary.com']
+    domains: ['localhost', 'res.cloudinary.com', 'ircbackend.herokuapp.com']
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if

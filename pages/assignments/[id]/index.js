@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Moment from 'react-moment';
 
+const url = 'https://ircbackend.herokuapp.com'
 
 const assignment = ({post}) => {
        
@@ -24,7 +25,7 @@ const assignment = ({post}) => {
                         </a>
                     </Link>
 				</div>
-                <Image className={styles.image} width={200} height={200} src={`http://localhost:8000/api/posts/image/${post._id}`} />
+                <Image className={styles.image} width={200} height={200} src={`${url}/api/posts/image/${post._id}`} />
                 <span>
                     Assigned At: <Moment fromNow ago>{post.createdAt}</Moment> ago
                 </span>
