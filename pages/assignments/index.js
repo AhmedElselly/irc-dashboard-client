@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styles from '../../styles/Post.module.css';
 import Sidebar from '../../components/Admin/Sidebar';
 
-const url = 'https://ircbackend.herokuapp.com/api/posts'
+const url = 'https://ircbackend.herokuapp.com/api/users'
 // const url = 'http://localhost:8000/api/users'
 
 const Assignments = props => {
