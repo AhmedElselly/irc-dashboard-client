@@ -14,6 +14,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import MuiAlert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
+
 
 const url = 'https://ircbackend.herokuapp.com';
 // const url = 'http://localhost:8000';
@@ -24,6 +26,18 @@ const Alert = forwardRef(function Alert(props, ref) {
   
 const User = ({user, assignments, enrollments}) => {
 	console.log('user', user)
+	const [openDial, setOpenDial] = useState(false);
+	const [src, setSrc] = useState('');
+
+	const handleClickOpen = (src) => {
+		setOpenDial(true);
+		setSrc(src);
+	};
+	
+	const handleCloseDial = () => {
+		setOpenDial(false);
+	};
+
 	const [admin, setAdmin] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [openForm, setOpenForm] = useState(false);
@@ -70,8 +84,8 @@ const User = ({user, assignments, enrollments}) => {
 	const generateAssignments = () => {
 		return assignments?.map(post => {
 			return (
-				<div className={styles.postContainer}>
-					<Image width={200} height={200} src={`${url}/api/posts/image/${post._id}`} />
+				<div onClick={() => handleClickOpen(`${url}/api/posts/image/${post._id}`)} className={styles.postContainer}>
+					<Image objectFit='contain' width={200} height={200} src={`${url}/api/posts/image/${post._id}`} />
 					<span>
 						Assigned At: <Moment fromNow ago>{post.createdAt}</Moment> ago
 					</span>
@@ -178,6 +192,16 @@ const User = ({user, assignments, enrollments}) => {
 					{message}
 				</Alert>
 			</Snackbar>
+			<Dialog
+        open={openDial}
+        onClose={handleCloseDial}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+				<div className={styles.imageContainer}>
+        	<Image className={styles.imageLarge} width={500} height={100} src={src} />
+				</div>
+      </Dialog>
 		</div>
 	)
 }

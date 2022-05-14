@@ -35,3 +35,24 @@
     display: flex;
     gap: 20px;
 }
+
+.image {
+    object-fit: contain;
+}
+
+.image-container {
+
+   width: 100%;
+  
+
+    position: unset !important;
+
+  
+   
+}
+.imageLarge {
+   object-fit: contain;
+   width: 500 !important;
+   position: relative !important;
+   height: unset !important;
+}
