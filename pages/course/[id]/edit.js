@@ -49,7 +49,7 @@ const CourseForm = ({course}) => {
 		learnMore: course.learnMore ? course.learnMore :'',
 		type: course.type ? course.type :'',
 		bluetoothRequired: course.bluetoothRequired ? course.bluetoothRequired : bluetoothCheck,
-		upload: course.programMode[1] ? course.programMode[1] : uploadCheck,
+		upload: course.programMode.includes('upload') ? true : uploadCheck,
 		useAutoScan: course.useAutoScan ? course.useAutoScan : useAutoScanCheck,
 		manufactor: course.manufactor ? course.manufactor :'',
 		defaultBaudRate: course.defaultBaudRate ? course.defaultBaudRate :'',
@@ -57,7 +57,7 @@ const CourseForm = ({course}) => {
 		serialPortalRequired: course.serialPortalRequired ? course.serialPortalRequired : serialPortalCheck,
 		initialConnectionRequired: course.initialConnectionRequired ? course.initialConnectionRequired : initialConnectionRequiredCheck,
 		launchPeripheralConnectionFlow: course.launchPeripheralConnectionFlow ? course.launchPeripheralConnectionFlow : launchPeripheralConnectionFlowCheck,
-		realtime: course.programMode[0] ? course.programMode[0] : realtimeCheck,
+		realtime: course.programMode.includes('realtime') ? true : realtimeCheck,
 		disabled: course.disabled ? course.disabled : disabledCheck,
 		cpp: course.programLanguage.includes('cpp') ? true : cppCheck,
 		c: course.programLanguage.includes('c') ? true : cCheck,
@@ -93,6 +93,8 @@ const CourseForm = ({course}) => {
 	} = values;
 
 	console.log('featured', featured)
+	console.log('realtime', realtime)
+	console.log('upload', upload, course.programMode[0])
 
 	useEffect(() => {
 		if(course.programLanguage.length > 0){
@@ -104,6 +106,7 @@ const CourseForm = ({course}) => {
 		}
 		
 		console.log('programLanguage', programLanguage)
+		console.log('programMode', programMode)
 	}, []);
 
 	const handleChange = e => {
