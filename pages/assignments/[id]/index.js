@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import styles from '../../../styles/Assignment.module.css';
 import Sidebar from '../../../components/Admin/Sidebar';
 import { getPost, getStudentPosts } from '../../../actions/postApi';
+import { getStudent } from '../../../actions/userApi';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ import Moment from 'react-moment';
 const url = 'https://ircbackend.herokuapp.com';
 // const url = 'http://localhost:8000';
 
-const assignment = ({post, relatedAssignments}) => {
+const assignment = ({user, relatedAssignments}) => {
        
     const generateRelated = () => {
         return relatedAssignments?.map(related => {
@@ -30,7 +31,7 @@ const assignment = ({post, relatedAssignments}) => {
                     <Sidebar/>
                 </div>
                 <div className={styles.right}>
-                <div className={styles.wrapper}>
+                {/* <div className={styles.wrapper}>
                     <div className={styles.card}>
                     <div className={styles.headerContainer}>
                         <Link href={`/user/${post.user._id}`}>
@@ -44,9 +45,9 @@ const assignment = ({post, relatedAssignments}) => {
                         Assigned At: <Moment fromNow ago>{post.createdAt}</Moment> ago
                     </span>
                     </div>
-                </div>
+                </div> */}
                 <div className={styles.bottom}>
-                    <h1>Other Assignments of {post.user.name}</h1>
+                    <h1>Assignments of {user.name}</h1>
                     <div className={styles.bottomWrapper}>
                     {generateRelated()}
                     </div>
@@ -58,11 +59,11 @@ const assignment = ({post, relatedAssignments}) => {
 }
 
 export const getServerSideProps = async ctx => {
-    const res = await getPost(ctx.query.id);
-    const related = await getStudentPosts(res.data.user._id);
+    const user = await getStudent(ctx.query.id);
+    const related = await getStudentPosts(ctx.query.id);
     return {
         props: {
-            post: res.data,
+            user: user.data,
             relatedAssignments: related.data
         }
     }

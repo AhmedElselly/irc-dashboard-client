@@ -6,26 +6,27 @@ import styles from '../../styles/Post.module.css';
 import Sidebar from '../../components/Admin/Sidebar';
 
 const url = 'https://ircbackend.herokuapp.com/api/posts'
-// const url = 'http://localhost:8000/api/posts'
+// const url = 'http://localhost:8000/api/users'
 
 const Assignments = props => {
-	const [posts, setPosts] = useState([]);
+	const [users, setUsers] = useState([]);
 	useEffect(() => {
 		getPosts().then(res => {
 			console.log(res.data);
-			setPosts(res.data);
+			setUsers(res.data);
 		})
 	}, []);
 
 	const generatePosts = () => {
-		return posts?.map(post => {
-			console.log(post._id)
+		return users?.map(user => {
+			console.log(user._id)
 			return (
-				<Link href={`/assignments/${post._id}`} passHref>
+				<Link href={`/assignments/${user._id}`} passHref>
 					<a>
-						<div className={styles.post}>
-							<Image className={styles.image} width={100} height={100} src={`${url}/image/${post._id}`} />
-							<h4 className={styles.username}>{post.user && post.user.name}</h4>
+						<div className={styles.user}>
+							{user.image && <Image className={styles.image} width={100} height={100} src={`${url}/user/image/${user._id}`} />}
+							{!user.image && <Image className={styles.image} width={100} height={100} src='/user.png' />}
+							<h4 className={styles.username}>{user && user.name}</h4>
 						</div>
 					</a>
 				</Link>
