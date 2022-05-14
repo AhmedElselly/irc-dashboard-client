@@ -1,5 +1,12 @@
 .container {
     display: flex;
+    /* flex-direction: column; */
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .left {
@@ -15,4 +22,15 @@
 
 .header:hover {
     text-decoration: underline;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bottomWrapper {
+    display: flex;
+    gap: 20px;
 }
