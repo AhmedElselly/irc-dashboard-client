@@ -1,8 +1,8 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 
-const url = 'https://ircbackend.herokuapp.com';
-// const url = 'http://localhost:8000';
+// const url = 'https://ircbackend.herokuapp.com';
+const url = 'http://localhost:8000';
 
 export const login = async (email, password) => {
     const res = await axios.post(`${url}/api/users/login`, {
@@ -28,6 +28,14 @@ export const addNewUser = async (formData, userId) => {
 
 export const updateUser = async (_id, formData, userId) => {
     const res = await axios.put(`${url}/api/users/student/${_id}/edit/${userId}`, formData);
+    return res;
+}
+
+export const changePassword = async (userId, oldPassword, newPassword) => {
+    const res = await axios.put(`${url}/api/users/user/change-password/${userId}`, {
+        oldPassword,
+        newPassword
+    });
     return res;
 }
 

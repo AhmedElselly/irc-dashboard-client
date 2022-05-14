@@ -32,3 +32,25 @@
     width: 97%;
     margin: 0 auto;
 }
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.label {
+    margin-bottom: 5px;
+}
+
+.input {
+    height: 35px;
+}
+
+.submitBtn {
+    margin: 10px auto;
+    border: none;
+    background-color: blueviolet;
+    color: #fff;
+    padding: 10px 15px;
+}

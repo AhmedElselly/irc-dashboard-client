@@ -47,13 +47,22 @@ const Edit = ({user}) => {
 		parentEmail: user.parentEmail ? user.parentEmail : '',
 		parentPhone: user.parentPhone ? user.parentPhone : '',
 		address: user.address ? user.address : '',
-		role: user.role ? user.role : ''
+		role: user.role ? user.role : '',
+		student: user.student ? true : false,
+		school: user.school ? true : false,
+		admin: user.admin ? true : false,
 	});
+
+	
 
 	const [statuses, setStatuses] = useState([]);
 	const [status, setStatus] = useState(user.status);
 
-	const {email, password, name, gender, schoolName, dateOfBirth, grade, city, image, phone, nameOfParent, parentEmail, parentPhone, address, role} = values;
+	const {email, password, name, gender, schoolName, dateOfBirth, grade, city, image, phone, nameOfParent, parentEmail, parentPhone, address, role, student, school, admin} = values;
+
+	console.log('student', student)
+	console.log('school', school)
+	console.log('admin', admin)
 
 	useEffect(() => {
 		getUserStatuses().then(res => {
@@ -208,7 +217,7 @@ const Edit = ({user}) => {
 									<FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
 									<RadioGroup
 										aria-labelledby="demo-radio-buttons-group-label"
-										defaultValue="male"
+										defaultValue={gender}
 										name="gender"
 										onChange={handleGenderChange}
 									>
@@ -220,7 +229,7 @@ const Edit = ({user}) => {
 									<FormLabel id="demo-radio-buttons-group-label">Role</FormLabel>
 									<RadioGroup
 										aria-labelledby="demo-radio-buttons-group-label"
-										defaultValue="student"
+										defaultValue={student && 'student' || school && 'school' || admin && 'admin'}
 										name="role"
 										onChange={handleRoleChange}
 									>
