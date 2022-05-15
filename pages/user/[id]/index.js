@@ -28,6 +28,7 @@ const User = ({user, assignments, enrollments}) => {
 	console.log('user', user)
 	const [openDial, setOpenDial] = useState(false);
 	const [src, setSrc] = useState('');
+	const [enrols, setEnrols] = useState(enrollments);
 
 	const handleClickOpen = (src) => {
 		setOpenDial(true);
@@ -58,15 +59,18 @@ const User = ({user, assignments, enrollments}) => {
 	}, []);
 
 	const handleRemoveEnrol = (userId, enrolId) => {
+		let newArr;
 		removeStudentEnrol(userId, enrolId).then(res => {
 			console.log(res.data);
 			setOpen(true);
 			setMessage(res.data.message);
+			newArr = enrols.filter(enrol => enrol._id !== enrolId);
+			setEnrols(newArr);
 		})
 	}
 
 	const generateEnrollments = () => {
-		return enrollments?.map(enrol => {
+		return enrols?.map(enrol => {
 			console.log(enrol)
 			return (
 				<div className={styles.card}>
