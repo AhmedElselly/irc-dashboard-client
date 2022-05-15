@@ -118,7 +118,8 @@ const User = ({user, assignments, enrollments}) => {
 						</Link>}
 					</div>
 					<div className={styles.item}>
-						<img className={styles.img} src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80' />
+					{user.image && <Image className={styles.img} width={100} height={100} src={`${url}/api/users/user/image/${user._id}`} />}
+							{!user.image && <Image className={styles.img} width={100} height={100} src='/user.png' />}
 						<div className={styles.details}>
 							<h1 className={styles.username}>{user.name}</h1>
 							<div className={styles.detailItem}>
