@@ -121,7 +121,7 @@ const New = props => {
 			}).catch(err => {
 				console.log(err.response.data)
 				setOpenError(true);
-				setMessageError(`${err.response.data.err.errors.name.path} is required`);
+				setMessageError(`${err.response.data.error}`);
 			});
 		}
 		
