@@ -31,6 +31,7 @@ const assignment = ({user, relatedAssignments}) => {
 			return (
 				<div onClick={() => handleClickOpen(`${url}/api/posts/image/${related._id}`)} className={styles.card}>
 					<Image className={styles.image} width={200} height={200} src={`${url}/api/posts/image/${related._id}`} />
+					{related.title && <b>{related.title}</b>}
 					<span>
 						Assigned At: <Moment fromNow ago>{related.createdAt}</Moment> ago
 					</span>
