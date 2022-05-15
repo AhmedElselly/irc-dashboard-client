@@ -71,9 +71,8 @@ const User = ({user, assignments, enrollments}) => {
 
 	const generateEnrollments = () => {
 		return enrols?.map(enrol => {
-			console.log(enrol)
 			return (
-				<div className={styles.card}>
+				<div key={enrol._id} className={styles.card}>
 					<div className={styles.cardWrapper}>
 						<Image width={200} height={200} src={enrol.course.image.url} />
 						<button onClick={() => handleRemoveEnrol(enrol.student, enrol._id)} className={styles.btnRemove}>Remove Enrollment</button>
@@ -88,8 +87,9 @@ const User = ({user, assignments, enrollments}) => {
 	const generateAssignments = () => {
 		return assignments?.map(post => {
 			return (
-				<div onClick={() => handleClickOpen(`${url}/api/posts/image/${post._id}`)} className={styles.postContainer}>
+				<div key={post._id} onClick={() => handleClickOpen(`${url}/api/posts/image/${post._id}`)} className={styles.postContainer}>
 					<Image objectFit='contain' width={200} height={200} src={`${url}/api/posts/image/${post._id}`} />
+					<b>{post.title}</b>
 					<span>
 						Assigned At: <Moment fromNow ago>{post.createdAt}</Moment> ago
 					</span>
