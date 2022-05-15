@@ -25,6 +25,14 @@ import Link from 'next/link';
 import {getStudents, isAuthenticated, getSchools, getUsers, removeUser} from '../../../actions/userApi';
 import {useRouter} from 'next/router';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -222,6 +230,9 @@ export default function EnhancedTable({title}) {
   const [rows, setRows] = React.useState([]);
   const [toRemove, setToRemove] = React.useState([]);
 
+  const [show, setShow] = React.useState(false);
+  const [user, setUserId] = React.useState('');
+
   const getAllUsers = () => {
     // console.log(router.pathname)
     
@@ -301,16 +312,33 @@ export default function EnhancedTable({title}) {
   };
 
   const handleRemove = (_id) => {
-    
-    console.log('to remove', _id);
-    const userId = isAuthenticated().user._id;
-    let newArr;
-    removeUser(_id, userId).then(res => {
-      console.log(res.data);
-      newArr = rows.filter(user => user._id !== _id);
-      setRows(newArr);
-    })
+    setShow(true);
+    setUserId(_id);
   }
+
+
+  const handleClickOpenDial = () => {
+    setShow(true);
+  };
+
+  const handleCloseDial = (answer) => {
+    // setShow(false);
+    if(answer === 'yes'){
+      const userId = isAuthenticated().user._id;
+      let newArr;
+      console.log('user and answer', answer, user);
+      removeUser(user, userId).then(res => {
+        console.log(res.data);
+        newArr = rows.filter(person => person._id !== user);
+        setRows(newArr);
+        setShow(false);
+      })
+    } else {
+      setShow(false);
+      setUserId('');
+    }
+    
+  };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -454,6 +482,23 @@ export default function EnhancedTable({title}) {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       /> */}
+      <Dialog
+        open={show}
+        keepMounted
+        onClose={handleCloseDial}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Confirm remove"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Are you sure you want to remove the user?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleCloseDial('yes')}>Yes</Button>
+          <Button onClick={() => handleCloseDial('no')}>No</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
