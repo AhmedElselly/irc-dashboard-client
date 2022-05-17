@@ -16,6 +16,8 @@ import Modal from '@mui/material/Modal';
 import MuiAlert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
 
+import FileSaver from "file-saver";
+import {utils, write} from "xlsx";
 
 const url = 'https://ircbackend.herokuapp.com';
 // const url = 'http://localhost:8000';
@@ -38,6 +40,8 @@ const User = ({user, assignments, enrollments}) => {
 	const handleCloseDial = () => {
 		setOpenDial(false);
 	};
+
+	console.log('user', user)
 
 	const [admin, setAdmin] = useState(false);
 	const [open, setOpen] = useState(false);
@@ -108,6 +112,18 @@ const User = ({user, assignments, enrollments}) => {
 		setOpenError(false);
 	};
 
+	const fileType =
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+	const fileExtension = ".xlsx";
+
+	const exportToExcel = (fileName) => {
+		const ws = utils.json_to_sheet([user]);
+		const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+		const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
+		const data = new Blob([excelBuffer], { type: fileType });
+		FileSaver.saveAs(data, fileName + fileExtension);
+	};
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.left}>
@@ -117,9 +133,14 @@ const User = ({user, assignments, enrollments}) => {
 				<div className={styles.top}>
 					<div className={styles.titleContainer}>
 						<h1 className={styles.title}>Information</h1>
+						<div className={styles.buttonsContainer}>
 						{admin && <Link href={`/user/${user._id}/edit`} passHref>
 							<a className={styles.link}>Edit</a>
 						</Link>}
+						{admin && <div className={styles.btnExport} onClick={() => exportToExcel(user.name)}>
+							Export
+						</div>}
+						</div>
 					</div>
 					<div className={styles.item}>
 					{user.image && <Image className={styles.img} width={100} height={100} src={`${url}/api/users/user/image/${user._id}`} />}

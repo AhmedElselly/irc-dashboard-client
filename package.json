@@ -16,6 +16,7 @@
     "@mui/x-data-grid": "^5.8.0",
     "axios": "^0.26.1",
     "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.3",
     "next": "12.1.4",
