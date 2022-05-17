@@ -54,3 +54,14 @@
     color: #fff;
     padding: 10px 15px;
 }
+
+.studentsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    margin-left: 50px;
+}

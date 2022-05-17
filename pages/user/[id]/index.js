@@ -214,7 +214,7 @@ const User = ({user, assignments, enrollments}) => {
 				<Chart name={user.name} data={user.data}/>
 				{user.school && <div className={styles.studentsContainer}>
 					<h1>Students</h1>
-					{user.student.length > 0 ? (
+					{user.students.length > 0 ? (
 						<div className={styles.studentsWrapper}>
 						{generateStudents()}
 						</div>): (

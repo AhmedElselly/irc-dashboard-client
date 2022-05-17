@@ -152,7 +152,7 @@ const UserDashboard = ({user}) => {
 	const generateStudents = () => {
 		return user1.students?.map(student => {
 			return (
-				<Link href={`/student/${student._id}`} passHref>
+				<Link href={`/user/${student._id}`} passHref>
 					<a>
 						<div className={styles.user}>
 							{student.image && <Image className={styles.image} width={100} height={100} src={`${url}/user/image/${student._id}`} />}
@@ -214,7 +214,7 @@ const UserDashboard = ({user}) => {
 				</div>				
 			</div>
 			{user.school && <div className={styles.studentsContainer}>
-				<h1 className={styles.title}>Students</h1>
+				<h1>Students</h1>
 				{user.students.length > 0 ? (
 					<div className={styles.studentsWrapper}>
 					{generateStudents()}
@@ -224,7 +224,7 @@ const UserDashboard = ({user}) => {
 						</div>
 				)}
 				</div>}
-			<h1 className={styles.title}>Assignments</h1>
+			<h1>Assignments</h1>
 				<div className={styles.assignments}>
 					{generatePosts()}							
 				</div>
@@ -269,6 +269,21 @@ const UserDashboard = ({user}) => {
 			</Snackbar>
 		</div>
 	)
+}
+
+
+export const getServerSideProps = async ctx => {
+	const res = await getStudent(ctx.query.id);
+	const assignments = await getStudentPosts(ctx.query.id);
+	// const enrols = await listByStudent(ctx.query.id);
+	// console.log(enrols.data)
+	return{
+		props: {
+			user: res.data,
+			assignments: assignments.data,
+			// enrollments: enrols.data
+		}
+	}
 }
 
 export default UserDashboard;
