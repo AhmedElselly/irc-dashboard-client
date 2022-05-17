@@ -5,3 +5,26 @@
 .right {
     flex: 6;
 }
+
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 90%;
+    margin-inline: auto;
+}
+
+
+.btnExport {
+    border: 1px solid blueviolet;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: blueviolet;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

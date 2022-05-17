@@ -124,6 +124,22 @@ const User = ({user, assignments, enrollments}) => {
 		FileSaver.saveAs(data, fileName + fileExtension);
 	};
 
+	const generateStudents = () => {
+		return user.students?.map(student => {
+			return (
+				<Link href={`/user/${student._id}`} passHref>
+					<a>
+						<div className={styles.user}>
+							{student.image && <Image className={styles.image} width={100} height={100} src={`${url}/user/image/${student._id}`} />}
+							{!student.image && <Image className={styles.image} width={100} height={100} src='/user.png' />}
+							<h4 className={styles.username}>{student && student.name}</h4>
+						</div>
+					</a>
+				</Link>
+			)
+		})
+	}
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.left}>
@@ -196,6 +212,17 @@ const User = ({user, assignments, enrollments}) => {
 					</div>
 				</div>
 				<Chart name={user.name} data={user.data}/>
+				{user.school && <div className={styles.studentsContainer}>
+					<h1>Students</h1>
+					{user.student.length > 0 ? (
+						<div className={styles.studentsWrapper}>
+						{generateStudents()}
+						</div>): (
+							<div className={styles.studentsWrapper}>
+								<h3>You have no students</h3>
+							</div>
+					)}
+				</div>}
 				<div className={styles.assignmentsContainer}>
 					<h3>Courses Enrolled</h3>
 					<div className={styles.assignments}>

@@ -76,6 +76,13 @@
     margin-right: 5px;
 }
 
+.studentsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .assignmentsContainer {
     margin-top: 100px;
     /* padding-bottom: 100px; */
