@@ -1,6 +1,6 @@
 import { useState, forwardRef } from 'react';
 import styles from '../styles/Login.module.css';
-import {authenticate, login} from '../actions/userApi';
+import {putForgotPassword} from '../actions/userApi';
 import {create} from '../actions/messageApi';
 import {useRouter} from 'next/router';
 import Snackbar from '@mui/material/Snackbar';
@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import MuiAlert from '@mui/material/Alert';
-import Link from 'next/link';
+
 
 const style = {
 	position: 'absolute',
@@ -28,14 +28,11 @@ const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Login = props => {
+const ForgotPassword = props => {
 	const router = useRouter();
 	const [loaded, setLoaded] = useState(false);
 	const [values, setValues] = useState({
-		email: '',
-		name: '',
-		password: '',
-		text: ''
+		email: ''
 	});
 	const [open, setOpen] = useState(false);
 	const [openForm, setOpenForm] = useState(false);
@@ -50,7 +47,7 @@ const Login = props => {
 
   const {vertical, horizontal} = state;
 
-	const {email, password, name, text} = values;
+	const {email} = values;
 
 
 	const handleChange = e => {
@@ -69,14 +66,13 @@ const Login = props => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		login(email, password).then(res => {
-			console.log(res.data)
-			authenticate(res.data, () => {
-				console.log('login success');
-				setLoaded(true);
-			})
+		putForgotPassword(email).then(res => {
+			console.log(res.data);
+            setLoaded(true);
+            setMessage(res.data.message);
+            setOpen(true);
 		}).catch(err => {
-			console.log(err.response);
+			console.log(err.response.data);
 			setMessageError(err.response.data.error);
 			setOpenError(true)
 		});
@@ -96,48 +92,15 @@ const Login = props => {
 		setOpenError(false);
 	};
 
-	if(loaded){
-		router.push('/dashboard');
-	}
-
+	
 	const handleFormClose = () => {
 		setOpenForm(false);
 	}
 
 	return (
-		<div className={styles.container}>
-				<Modal
-				open={openForm}
-				onClose={handleFormClose}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			  >
-					<Box sx={style}>
-						<h4>Tell us the problem</h4>
-						<form onSubmit={handleMessageSubmit}>
-							{/* Email */}
-							<div className={styles.formGroup}>
-								<label className={styles.label} htmlFor='email'>Email</label>
-								<input type='email' className={styles.input} name='email' value={email} onChange={handleChange} />
-							</div>
-							{/* Password */}
-							<div className={styles.formGroup}>
-								<label className={styles.label} htmlFor='name'>Name</label>
-								<input type='text' className={styles.input} name='name' value={name} onChange={handleChange} />
-							</div>
-							<div className={styles.formGroup}>
-								<label className={styles.label} htmlFor='name'>Name</label>
-								<textarea className={styles.textArea} name='text' value={text} onChange={handleChange}></textarea>
-							</div>
-							{/* Button */}
-						
-							<button className={styles.btn}>Send Message</button>
-						</form>
-					</Box>
-			  </Modal>
-			
+		<div className={styles.container}>			
 			<div className={styles.wrapper}>
-				<h1 className={styles.title}>Login</h1>
+				<h1 className={styles.title}>Forgot Password?</h1>
 				{/* Form */}
 				<form onSubmit={handleSubmit}>
 					{/* Email */}
@@ -145,21 +108,8 @@ const Login = props => {
 						<label className={styles.label} htmlFor='email'>Email</label>
 						<input type='email' className={styles.input} name='email' value={email} placeholder='JohnDoe@email.com' onChange={handleChange} />
 					</div>
-					{/* Password */}
-					<div className={styles.formGroup}>
-						<label className={styles.label} htmlFor='password'>Password</label>
-						<input type='password' className={styles.input} name='password' value={password} placeholder='******' onChange={handleChange} />
-					</div>
-					{/* Button */}
-					<div className={styles.troubleContainer}>
-						<div onClick={handleOpen} className={styles.trouble}>
-							Having trouble logging in?
-						</div>
-						<Link href='/forgot-password' passHref>
-							<a className={styles.trouble}>Forgot your password?</a>
-						</Link>
-					</div>
-					<button className={styles.btn}>Login</button>
+					
+					<button className={styles.btn}>Submit</button>
 				</form>
 			</div>
 			<Snackbar anchorOrigin={{vertical, horizontal}} open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -176,4 +126,4 @@ const Login = props => {
 	)
 }
 
-export default Login;
+export default ForgotPassword;

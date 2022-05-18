@@ -54,3 +54,8 @@
     height: 100px;
     resize: none;
 }
+
+.troubleContainer {
+    display: flex;
+    justify-content: space-between;
+}

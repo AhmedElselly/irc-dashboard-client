@@ -71,6 +71,20 @@ export const updateUserStatuses = async (_id, status, userId) => {
     return res;
 }
 
+export const putForgotPassword = async email => {
+    const res = await axios.put(`${url}/api/users/user/forgot-password`, {
+        email
+    });
+    return res;
+}
+
+export const resetPassword = async (password, token) => {
+    const res = await axios.put(`${url}/api/users/user/reset/${token}`, {
+        password
+    });
+    return res;
+}
+
 export const removeUser = async (_id, userId) => {
     const res = await axios.delete(`${url}/api/users/statuses/${_id}/remove/${userId}`);
     return res;
