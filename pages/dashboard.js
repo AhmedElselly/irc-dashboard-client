@@ -18,7 +18,7 @@ const Dashboard = props => {
 	return (
 		<div>
 			{admin && <AdminHome/>}
-			{user && <UserDashboard user={isAuthenticated().user}/>}
+			{isAuthenticated() && user && <UserDashboard user={isAuthenticated().user}/>}
 		</div>
 	)
 }
