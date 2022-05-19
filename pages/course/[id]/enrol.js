@@ -75,9 +75,30 @@ const Enrol = ({course}) => {
 
 export const getServerSideProps = async ctx => {
 	const res = await getCourse(ctx.query.id);
+	try {
+		const myCookie = ctx.req.cookies
+		console.log('admin?', JSON.parse(myCookie.user))
+		const admin = JSON.parse(myCookie.user).user.admin;
+		if(!admin){
+			return {
+				redirect: {
+					destination: '/login',
+					permanent: false
+				}
+			}
+		}
+	} catch(err){
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false
+			}
+		}
+	}
 	return {
 		props: {
-			course: res.data
+			course: res.data,
+			admin: ''
 		}
 	}
 }

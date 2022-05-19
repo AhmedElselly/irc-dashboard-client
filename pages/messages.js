@@ -28,10 +28,33 @@ const Messages = ({messages}) => {
 }
 
 export const getServerSideProps = async ctx => {
-	const res = await index();
+	const res = await index();	
+	try {
+		const myCookie = ctx.req.cookies
+		console.log('admin?', JSON.parse(myCookie.user))
+		const admin = JSON.parse(myCookie.user).user.admin;
+		if(!admin){
+			return {
+				redirect: {
+					destination: '/login',
+					permanent: false
+				}
+			}
+		}
+	} catch(err){
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false
+			}
+		}
+	}
+
+	
 	return {
 		props: {
-			messages: res.data
+			messages: res.data,
+			admin: ''
 		}
 	}
 }

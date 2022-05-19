@@ -44,4 +44,37 @@ const Students = props => {
 	)
 }
 
+
+export const getServerSideProps = async ctx => {
+	
+	try {
+		const myCookie = ctx.req.cookies
+		console.log('admin?', JSON.parse(myCookie.user))
+		const admin = JSON.parse(myCookie.user).user.admin;
+		if(!admin){
+			return {
+				redirect: {
+					destination: '/login',
+					permanent: false
+				}
+			}
+		}
+	} catch(err){
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false
+			}
+		}
+	}
+
+	
+	return {
+		props: {
+			admin: ''
+		}
+	}
+	
+}
+
 export default Students;

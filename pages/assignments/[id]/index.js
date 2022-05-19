@@ -69,10 +69,31 @@ const assignment = ({user, relatedAssignments}) => {
 export const getServerSideProps = async ctx => {
     const user = await getStudent(ctx.query.id);
     const related = await getStudentPosts(ctx.query.id);
+	try {
+		const myCookie = ctx.req.cookies
+		console.log('admin?', JSON.parse(myCookie.user))
+		const admin = JSON.parse(myCookie.user).user.admin;
+		if(!admin){
+			return {
+				redirect: {
+					destination: '/login',
+					permanent: false
+				}
+			}
+		}
+	} catch(err){
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false
+			}
+		}
+	}
     return {
         props: {
             user: user.data,
-            relatedAssignments: related.data
+            relatedAssignments: related.data,
+			admin: ''
         }
     }
 }

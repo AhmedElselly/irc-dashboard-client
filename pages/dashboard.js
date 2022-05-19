@@ -23,4 +23,33 @@ const Dashboard = props => {
 	)
 }
 
+export const getServerSideProps = async ctx => {
+	
+	try {
+		const myCookie = ctx.req.cookies
+		console.log('admin?', JSON.parse(myCookie.user))
+		const user = JSON.parse(myCookie.user);
+		if(!user){
+			return {
+				redirect: {
+					destination: '/login',
+					permanent: false
+				}
+			}
+		}
+	} catch(err){
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false
+			}
+		}
+	}
+	return {
+		props: {
+			user: ''
+		}
+	}
+}
+
 export default Dashboard;
