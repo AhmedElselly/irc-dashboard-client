@@ -1,8 +1,8 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 
-const url = 'https://ircbackend.herokuapp.com';
-// const url = 'http://localhost:8000';
+// const url = 'https://ircbackend.herokuapp.com';
+const url = 'http://localhost:8000';
 
 export const login = async (email, password) => {
     const res = await axios.post(`${url}/api/users/login`, {

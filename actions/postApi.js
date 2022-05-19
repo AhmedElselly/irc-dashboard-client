@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const url = 'https://ircbackend.herokuapp.com';
-// const url = 'http://localhost:8000';
+// const url = 'https://ircbackend.herokuapp.com';
+const url = 'http://localhost:8000';
 
 export const create = async data => {
     const res = await axios.post(`${url}/api/posts/create`, {data});
