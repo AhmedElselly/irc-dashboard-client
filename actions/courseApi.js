@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const url = 'https://ircbackend.herokuapp.com/api/courses';
+const url = 'https://irc-backend-5eke.onrender.com/api/courses';
 // const url = 'http://localhost:8000/api/courses';
-const url = 'http://64.227.74.120/api/courses';
+// const url = 'http://64.227.74.120/api/courses';
 
 export const create = async (formData, userId) => {
     const res = await axios.post(`${url}/create/${userId}`, formData);

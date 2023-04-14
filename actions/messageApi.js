@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const url = 'https://ircbackend.herokuapp.com/api/messages';
+const url = 'https://irc-backend-5eke.onrender.com/api/messages';
 // const url = 'http://localhost:8000/api/messages';
-const url = 'http://64.227.74.120/api/messages';
+// const url = 'http://64.227.74.120/api/messages';
 
 export const index = async () => {
     const res = await axios.get(`${url}`);
